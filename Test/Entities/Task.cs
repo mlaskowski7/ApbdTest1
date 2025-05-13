@@ -12,8 +12,8 @@ public class Task  : BaseEntity
     
     public required TaskType TaskType { get; set; }
     
-    public required TeamMember AssignedTo { get; set; }
+    public TeamMember AssignedTo { get; set; }
     
-    public required TeamMember Creator { get; set; }
+    public TeamMember Creator { get; set; }
     
 }
