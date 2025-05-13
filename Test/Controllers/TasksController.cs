@@ -9,10 +9,13 @@ namespace Test.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly ITeamMemberService _teamMemberService;
+    
+    private readonly IProjectService _projectService;
 
-    public TasksController(ITeamMemberService teamMemberService)
+    public TasksController(ITeamMemberService teamMemberService, IProjectService projectService)
     {
         _teamMemberService = teamMemberService;
+        _projectService = projectService;
     }
 
     [HttpGet("{id:int}")]
@@ -27,5 +30,19 @@ public class TasksController : ControllerBase
         }
         
         return Ok(teamMember);
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteProjectByIdAsync(
+        [FromRoute] int id,
+        CancellationToken cancellationToken = default)
+    {
+        var isFound = await _projectService.DeleteProjectByIdAsync(id, cancellationToken);
+        if (!isFound)
+        {
+            return NotFound($"Task with id {id} does not exist");
+        }
+        
+        return NoContent();
     }
 }

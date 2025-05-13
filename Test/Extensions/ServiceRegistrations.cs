@@ -33,6 +33,7 @@ public static class ServiceRegistrations
     {
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
         
         return services;
     }
@@ -40,6 +41,7 @@ public static class ServiceRegistrations
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<ITeamMemberService, TeamMemberService>();
+        services.AddScoped<IProjectService, ProjectService>();
         
         return services;
     }

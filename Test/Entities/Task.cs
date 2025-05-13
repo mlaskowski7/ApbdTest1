@@ -8,9 +8,9 @@ public class Task  : BaseEntity
     
     public required DateTime Deadline { get; set; }
     
-    public required Project Project { get; set; }
+    public Project Project { get; set; }
     
-    public required TaskType TaskType { get; set; }
+    public TaskType TaskType { get; set; }
     
     public TeamMember AssignedTo { get; set; }
     
