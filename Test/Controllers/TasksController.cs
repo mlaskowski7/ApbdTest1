@@ -50,7 +50,7 @@ public class TasksController : ControllerBase
             var isFound = await _projectService.DeleteProjectByIdAsync(id, cancellationToken);
             if (!isFound)
             {
-                return NotFound($"Task with id {id} does not exist");
+                return NotFound($"Project with id {id} does not exist");
             }
 
             return NoContent();
