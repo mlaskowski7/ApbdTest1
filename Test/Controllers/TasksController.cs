@@ -23,13 +23,21 @@ public class TasksController : ControllerBase
         [FromRoute] int id, 
         CancellationToken cancellationToken = default)
     {
-        var teamMember = await _teamMemberService.GetTeamMemberByIdAsync(id, cancellationToken);
-        if (teamMember is null)
+        try
         {
-            return NotFound($"Team Member with id {id} does not exist");
+            var teamMember = await _teamMemberService.GetTeamMemberByIdAsync(id, cancellationToken);
+            if (teamMember is null)
+            {
+                return NotFound($"Team Member with id {id} does not exist");
+            }
+
+            return Ok(teamMember);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An internal server error occurred.");
         }
         
-        return Ok(teamMember);
     }
 
     [HttpDelete("{id:int}")]
@@ -37,12 +45,20 @@ public class TasksController : ControllerBase
         [FromRoute] int id,
         CancellationToken cancellationToken = default)
     {
-        var isFound = await _projectService.DeleteProjectByIdAsync(id, cancellationToken);
-        if (!isFound)
+        try
         {
-            return NotFound($"Task with id {id} does not exist");
+            var isFound = await _projectService.DeleteProjectByIdAsync(id, cancellationToken);
+            if (!isFound)
+            {
+                return NotFound($"Task with id {id} does not exist");
+            }
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An internal server error occurred.");
         }
         
-        return NoContent();
     }
 }
